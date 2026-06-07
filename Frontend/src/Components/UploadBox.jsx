@@ -21,7 +21,7 @@ const UploadBox = ({ onUploadSuccess }) => {
 
             const username = localStorage.getItem("username")
 
-            const response = await fetch("http://localhost:5000/api/file/upload", {
+            const response = await fetch("https://mylocker-api.onrender.com/api/file/upload", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

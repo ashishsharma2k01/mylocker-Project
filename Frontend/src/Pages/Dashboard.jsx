@@ -11,7 +11,7 @@ const Dashboard = () => {
     try {
       const username = localStorage.getItem("username");
       const response = await fetch(
-        `http://localhost:5000/api/file/files?username=${username}`
+        `https://mylocker-api.onrender.com/api/file/files?username=${username}`
       );
       const data = await response.json();
       setFiles(data);
