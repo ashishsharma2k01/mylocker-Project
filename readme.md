@@ -1,17 +1,19 @@
 # MyLocker
 
-MyLocker is a full-stack MERN application that allows users to register, log in, and manage their personal records through a simple and responsive dashboard.
+MyLocker is a full-stack web application that allows users to register, log in, and manage their records through a simple and responsive dashboard.
 
 The project was built to gain practical experience with React, Node.js, Express.js, MongoDB Atlas, REST APIs, deployment, and GitHub workflows.
 
 ## Features
 
-* User Registration and Login
+* User Registration
+* User Login Authentication
 * MongoDB Atlas Database Integration
 * REST API Architecture
 * Responsive User Interface
-* Cloud Deployment using Vercel and Render
-* Document Entry Management
+* Document Record Management
+* Frontend Deployment on Vercel
+* Backend Deployment on Render
 
 ## Tech Stack
 
@@ -31,11 +33,6 @@ The project was built to gain practical experience with React, Node.js, Express.
 * MongoDB Atlas
 * Mongoose
 
-### Deployment
-
-* Vercel
-* Render
-
 ### Version Control
 
 * Git
@@ -43,11 +40,12 @@ The project was built to gain practical experience with React, Node.js, Express.
 
 ## How It Works
 
-1. Users create an account and log in.
-2. Credentials are sent to the backend through REST APIs.
+1. Users create an account through the registration page.
+2. Credentials are sent to the backend using REST APIs.
 3. User information is stored in MongoDB Atlas.
-4. After successful authentication, users access the dashboard.
-5. Users can manage their stored records through the application interface.
+4. Users can log in using their registered credentials.
+5. After authentication, users are redirected to the dashboard.
+6. Users can manage their stored records through the application interface.
 
 ## API Endpoints
 
@@ -64,12 +62,11 @@ The project was built to gain practical experience with React, Node.js, Express.
 
 ## Future Improvements
 
-* Password hashing using bcrypt
-* JWT Authentication
-* Real file uploads with Multer
-* Cloud Storage Integration
-* User Profile Management
-* Search and Filtering Features
+* Password encryption
+* Protected user sessions
+* Dummy file uploads
+* Search and filtering
+* Improved dashboard experience
 
 ## Author
 
