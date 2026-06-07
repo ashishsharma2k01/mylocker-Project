@@ -6,7 +6,6 @@ import DocumentCard from "../Components/DocumentCard";
 const Dashboard = () => {
   const [files, setFiles] = useState([]);
 
-  // Fetch only files for the logged-in user
   const fetchFiles = async () => {
     try {
       const username = localStorage.getItem("username");
@@ -24,12 +23,10 @@ const Dashboard = () => {
     fetchFiles();
   }, []);
 
-  // Add new file after upload
   const handleUploadSuccess = (newFile) => {
     setFiles((prev) => [...prev, newFile]);
   };
 
-  // Delete file
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`https://mylocker-api.onrender.com/api/file/${id}`, {
