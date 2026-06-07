@@ -32,7 +32,7 @@ const Dashboard = () => {
   // Delete file
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/file/${id}`, {
+      const response = await fetch(`https://mylocker-api.onrender.com/api/file/${id}`, {
         method: "DELETE",
       });
       if (response.ok) {
