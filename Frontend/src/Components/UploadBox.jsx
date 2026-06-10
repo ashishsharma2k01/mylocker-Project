@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Uploadbox = () => {
+const Uploadbox = ({setFiles}) => {
 
     const [loading, setloading] = useState(false);
     const [file, setfile] = useState(null);
