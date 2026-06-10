@@ -60,7 +60,7 @@ const Register = () => {
                     type="text"
                     placeholder='Username'
                     className='bg-amber-50 m-2 p-2 rounded-2xl h-10 w-full'
-                    {...register("psername",
+                    {...register("username",
                         {
                             required: "Field is required",
                             minLength: { value: 8, message: "Minimum length of username is 8" },
@@ -94,7 +94,7 @@ const Register = () => {
                     {...register("confirmpassword", {
                         required: "please confirm your password",
                         validate: (value) =>
-                            value === getValues("Password") || "password do not match"
+                            value === getValues("password") || "password do not match"
                     })} />
 
                 <div className='flex'>
