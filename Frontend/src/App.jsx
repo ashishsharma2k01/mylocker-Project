@@ -1,13 +1,14 @@
 import { BrowserRouter, Route, Routes} from 'react-router-dom'
-
 import React from 'react'
+import './App.css'
 import Login from './Pages/Login'
 import Register from './Pages/Register'
 import Dashboard from './Pages/Dashboard'
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <>
+      <BrowserRouter>
       <Routes>
 
         <Route path='/' element={<Login/>} />
@@ -16,6 +17,7 @@ const App = () => {
 
       </Routes>
     </BrowserRouter>
+    </>
   )
 }
 

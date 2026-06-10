@@ -1,36 +1,33 @@
 import React from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
-    const location = useLocation()
-    const navigate = useNavigate()
-
-    const username = location.state?.username
-
-    const handlelogout = () => {
-        navigate("/")
-    }
+    const username = localStorage.getItem("username");
 
     return (
-        <nav className='h-14 w-full bg-purple-700 flex items-center justify-between px-4 shadow-md'>
+        <div className='flex justify-between bg-gray-600'>
 
-            <h1 className='text-2xl text-white'>
-                My <span className='font-bold text-emerald-400'>Locker</span>
-            </h1>
+            <div className="logo">
+                <div className='flex  m-1 p-1'>
+                    <img src="safe.png" alt="" className='h-8' />
+                    <h1 className='text-green-500 text-3xl relative left-1 bottom-1'>My<span className='text-green-400 text-3xl'>Locker</span></h1>
+                </div>
+            </div>
 
-            <h2 className='text-yellow-300 text-lg font-medium hidden sm:block'>
-                Welcome, {username || "User"}
-            </h2>
+            <div>
+                <h1 className="text-yellow-300 text-3xl m-1 p-1 font-medium hidden sm:block">
+                    Welcome, {username || "user"}
+                </h1>
+            </div>
 
-            <button
-                onClick={handlelogout}
-                className='text-white bg-black px-4 py-1 rounded-2xl hover:bg-gray-800 transition cursor-pointer'
-            >
-                Log out
+            <button className='bg-black py-1 px-2 m-2 rounded-3xl hover: cursor-pointer text-white hover:bg-gray-900 '>
+                <Link to="/">
+                    Log Out
+                </Link>
             </button>
 
-        </nav>
+        </div>
     )
 }
 

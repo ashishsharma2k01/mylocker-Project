@@ -1,15 +1,11 @@
 import React, { useState } from 'react'
 
-const UploadBox = ({ onUploadSuccess }) => {
+const Uploadbox = () => {
 
-    const [file, setFile] = useState(null)
-    const [loading, setLoading] = useState(false)
+    const [loading, setloading] = useState(false);
+    const [file, setfile] = useState(null);
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0])
-    }
-
-    const handleUpload = async () => {
+    const handleupload = async () => {
 
         if (!file) {
             alert("Please select a file")
@@ -17,84 +13,68 @@ const UploadBox = ({ onUploadSuccess }) => {
         }
 
         try {
-            setLoading(true)
+
+            setloading(true)
 
             const username = localStorage.getItem("username")
 
-            const response = await fetch("https://mylocker-api.onrender.com/api/file/upload", {
+            const response = await fetch("http://localhost:5000/api/auth/upload", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-type": "application/json" },
                 body: JSON.stringify({
-                    username: username,
+                    username,
                     filename: file.name,
-                    content: "dummy content (no multer yet)"
+                    content: "Blank Now"
                 })
-            })
+            });
 
-            const data = await response.json()
+            const data = await response.json();
 
             if (response.ok) {
-                alert("Uploaded successfully")
 
-                if (typeof onUploadSuccess === "function") {
-                    onUploadSuccess(data.file)
-                }
+                alert("file uploaded successfully")
 
-                setFile(null)
-                document.getElementById("fileInput").value = ""
+                setfile(null)
 
-            } else {
-                alert(data.message || "Upload failed")
             }
-
         } catch (error) {
-            console.log(error)
-            alert("Server error")
+            console.error(error)
+            alert("server error")
+
         } finally {
-            setLoading(false)
+            setloading(false)
         }
+
     }
 
     return (
         <div className='bg-white p-6 rounded-2xl shadow-md max-w-md mx-auto mt-6'>
-
             <h2 className='text-xl font-bold mb-4'>Upload Document</h2>
 
-            <div className='flex items-center justify-between'>
-
-                <input
-                    type="file"
-                    id="fileInput"
-                    onChange={handleFileChange}
+            <div className='flex justify-between'>
+                <input type="file"
                     className='hidden'
+                    id='fileinput'
+                    onChange={(e) => { setfile(e.target.files[0]) }}
                 />
 
-                <label htmlFor="fileInput">
+                <label htmlFor="fileinput">
                     <div className='bg-gray-200 px-4 py-2 rounded-xl cursor-pointer hover:bg-gray-300'>
-                        Choose File
+                        {file ? file.name : "Choose file"}
                     </div>
                 </label>
 
                 <button
-                    onClick={handleUpload}
+                    onClick={handleupload}
+                    className='bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700 disabled:opacity-50 hover: cursor-pointer'
                     disabled={loading}
-                    className='bg-purple-600 text-white px-4 py-2 rounded-xl hover:bg-purple-700 disabled:opacity-50'
                 >
                     {loading ? "Uploading..." : "Upload"}
                 </button>
 
             </div>
-
-            {file && (
-                <p className='mt-3 text-sm text-gray-600'>
-                    Selected: {file.name}
-                </p>
-            )}
-
         </div>
     )
 }
 
-export default UploadBox
+export default Uploadbox

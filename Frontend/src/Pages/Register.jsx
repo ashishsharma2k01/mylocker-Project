@@ -1,123 +1,120 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import '../App.css'
 
 const Register = () => {
 
+    const navigate = useNavigate();
     const [showpass, setshowpass] = useState(false)
 
-    const [username, setusername] = useState("")
-    const [password, setpassword] = useState("")
-    const [repassword, setrepassword] = useState("")
+    const {
+        register,
+        handleSubmit,
+        getValues,
+        formState: { errors },
+    } = useForm();
 
-    const navigate = useNavigate()
 
-    const handleregister = async () => {
-
-        console.log("Register clicked")
-
-        if (!username || !password || !repassword) {
-            alert("All fields are required")
-            return
-        }
-
-        if (password !== repassword) {
-            alert("Passwords do not match")
-            return
-        }
-
+    const handleregister = async (data) => {
+        const { confirmpassword, ...userData } = data;
         try {
-
-            const response = await fetch("https://mylocker-api.onrender.com/api/auth/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    username,
-                    password
-                })
-            })
-
-            const data = await response.json()
-
-            console.log("Backend Response:", data)
+            const response = await fetch("http://localhost:5000/api/auth/register",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", },
+                    body: JSON.stringify(userData),
+                });
+            const result = await response.json();
 
             if (response.ok) {
-                alert("Registered successfully")
-
-                setusername("")
-                setpassword("")
-                setrepassword("")
+                alert("registered Successfull")
 
                 navigate("/")
+
             } else {
-                alert(data.message)
+                alert(result.message)
             }
 
         } catch (error) {
-            console.log("Error:", error)
-            alert("Server not responding")
+            console.error(error);
+            alert("server error")
         }
     }
 
     return (
-        <div className='h-screen bg-purple-900 flex flex-col items-center justify-center'>
+        <div className='flex justify-center items-center min-h-screen'>
+            <div className='bg-black p-8 flex flex-col items-center  w-[90%] min-w-auto max-w-sm min-h-auto rounded-xl'>
 
-            <h1 className='text-3xl text-white mb-4'>
-                My <span className='font-bold text-emerald-400'>Locker</span>
-            </h1>
+                <div className='flex relative bottom-3'>
+                    <div>
+                        <img src="safe.png" alt="" className='h-10' />
+                    </div>
 
-            <div className='bg-purple-400 w-[90%] max-w-md rounded-3xl flex flex-col p-6 shadow-xl'>
-
-                <div className='text-center text-2xl text-white font-medium mb-6'>
-                    Create Your Credentials
+                    <div className='mx-2'>
+                        <h1 className='text-green-400 text-3xl'>My<span className='text-emerald-300'>Locker</span></h1>
+                    </div>
                 </div>
 
-                <div className='flex flex-col flex-1 justify-center'>
+                <input
+                    type="text"
+                    placeholder='Username'
+                    className='bg-amber-50 m-2 p-2 rounded-2xl h-10 w-full'
+                    {...register("Username",
+                        {
+                            required: "Field is required",
+                            minLength: { value: 8, message: "Minimum length of username is 8" },
+                            pattern: { value: /[A-Z]/, message: "One uppercase letter is required" },
+                        })} />
+                {errors.Username && <div className='text-red-600 text-[12px]'>{errors.Username.message}</div>}
 
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setusername(e.target.value)}
-                        className='w-full h-10 mb-4 px-4 rounded-3xl bg-white outline-none'
-                    />
-
-                    <input
-                        type={showpass ? "text" : "password"}
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setpassword(e.target.value)}
-                        className='w-full h-10 mb-4 px-4 rounded-3xl bg-white outline-none'
-                    />
-
+                <div className='relative w-full right-2'>
                     <input
                         type={showpass ? "text" : "password"}
-                        placeholder="Confirm Password"
-                        value={repassword}
-                        onChange={(e) => setrepassword(e.target.value)}
-                        className='w-full h-10 mb-4 px-4 rounded-3xl bg-white outline-none'
+                        placeholder='Password'
+                        className='bg-amber-50 m-2 p-2 rounded-2xl h-10 w-full pr-10'
+                        {...register("Password",
+                            {
+                                required: "Field is required",
+                                minLength: { value: 8, message: "Minimum length of password is 8" },
+                                pattern: { value: /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/, message: "Password must contain uppercase, number and special character" },
+                            })} />
+                    <input
+                        type="checkbox"
+                        className='absolute right-1 top-1/2 transform -translate-y-1/2 hover:cursor-pointer'
+                        onChange={() => setshowpass(!showpass)}
                     />
-
-                    <label className='flex items-center gap-2 text-sm text-black mb-4 relative left-2'>
-                        <input
-                            type="checkbox"
-                            onChange={() => setshowpass(!showpass)}
-                        />
-                        Show Password
-                    </label>
-
                 </div>
+                {errors.Password && <div className='text-red-600 text-[12px]'>{errors.Password.message}</div>}
 
-                <button
-                    onClick={handleregister}
-                    className='bg-purple-300 px-5 py-2 rounded-2xl hover:bg-purple-200 transition cursor-pointer'
-                >
-                    Register
-                </button>
+                <input
+                    type={showpass ? "text" : "password"}
+                    placeholder='Confirm Password'
+                    className='bg-amber-50 m-2 p-2 rounded-2xl h-10 w-full pr-10'
+                    {...register("confirmpassword", {
+                        required: "please confirm your password",
+                        validate: (value) =>
+                            value === getValues("Password") || "password do not match"
+                    })} />
 
+                <div className='flex'>
+
+                    <form onSubmit={handleSubmit(handleregister)}>
+                        ...
+                        <button
+                            type='submit'
+                            className='bg-amber-50 px-3 py-1 m-1 rounded-2xl hover:cursor-pointer'>
+                            Sign Up</button>
+                    </form>
+
+                    <Link
+                        to="/"
+                        className='text-amber-50 px-3 py-1 m-1 hover:cursor-pointer '>
+                        Login</Link>
+                </div>
             </div>
         </div>
+
     )
 }
 
