@@ -32,6 +32,10 @@ const Uploadbox = () => {
 
             if (response.ok) {
 
+                setFiles(prev => [...prev,
+                    { name: file.name }
+                ])
+
                 alert("file uploaded successfully")
 
                 setfile(null)
