@@ -60,7 +60,7 @@ const Register = () => {
                     type="text"
                     placeholder='Username'
                     className='bg-amber-50 m-2 p-2 rounded-2xl h-10 w-full'
-                    {...register("Username",
+                    {...register("psername",
                         {
                             required: "Field is required",
                             minLength: { value: 8, message: "Minimum length of username is 8" },
@@ -73,7 +73,7 @@ const Register = () => {
                         type={showpass ? "text" : "password"}
                         placeholder='Password'
                         className='bg-amber-50 m-2 p-2 rounded-2xl h-10 w-full pr-10'
-                        {...register("Password",
+                        {...register("password",
                             {
                                 required: "Field is required",
                                 minLength: { value: 8, message: "Minimum length of password is 8" },
