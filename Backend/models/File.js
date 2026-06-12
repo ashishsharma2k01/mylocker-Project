@@ -10,4 +10,4 @@ const FileSchema = new mongoose.Schema({
     }
 })
 
-module.exports = model.FileSchema("file", FileSchema);
+module.exports = mongoose.model("file", FileSchema);
