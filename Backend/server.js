@@ -13,6 +13,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/version", (req, res) => {
+    res.json({
+        version: "new backend"
+    });
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/file", fileRoutes);
 
